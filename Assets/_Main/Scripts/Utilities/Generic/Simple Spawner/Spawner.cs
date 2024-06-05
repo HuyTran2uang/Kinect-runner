@@ -40,4 +40,9 @@ public class Spawner<T> : MonoBehaviourSingleton<Spawner<T>> where T : MonoBehav
         _used.Remove(item);
         _pool.Enqueue(item);
     }
+
+    public void Clear()
+    {
+        _used.ForEach(i => i.gameObject.SetActive(false));
+    }
 }

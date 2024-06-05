@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,17 +39,22 @@ public class PlayerController : MonoBehaviour
         transform.position += Vector3.right * GameManager.Instance.ScaleSpace;
     }
 
-    private void Sensor()
-    {
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         var item = other.GetComponent<Item>();
         if (item != null)
         {
-            item.Receive();
+            item.Receive(this);
         }
+    }
+
+    public void IncreaseScore(int amount)
+    {
+        GameManager.Instance.SetScore(GameManager.Instance.Score + amount);
+    }
+
+    public void DecreaseScore(int amount)
+    {
+        GameManager.Instance.SetScore(GameManager.Instance.Score - amount);
     }
 }

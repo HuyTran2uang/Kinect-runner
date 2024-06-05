@@ -10,12 +10,13 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     private void Start()
     {
+        Load();
         StartGame();
     }
 
     private void Update()
     {
-        SpawnOneItemEachSpace();
+        SpawnOneItemOrEnemyEachSpace();
     }
 
     private void FixedUpdate()
@@ -23,29 +24,75 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         Space += MoveSpeed * Time.deltaTime;
     }
 
+    private void Load()
+    {
+        if (PlayerPrefs.HasKey("HighestScore"))
+        {
+            int highestScore = PlayerPrefs.GetInt("HighesetScore");
+            UIController.Instance.SetHighestScoreText(highestScore);
+        }
+    }
+
     private void StartGame()
     {
         SetScore(0);
     }
 
-    private void SpawnOneItemEachSpace()
+    private void SpawnOneItemOrEnemyEachSpace()
     {
         if ((int)Space % 15 == 0 && (int)Space != OldSpace)
         {
             OldSpace = (int)(Space);
-            var item = ItemSpawner.Instance.Spawn();
-            item.transform.position = Vector3.right * Random.Range(-1, 2) * ScaleSpace + Vector3.forward * 100;
-            item.Init();
+            bool isItem = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
+            if (isItem)
+            {
+                var item = ItemSpawner.Instance.Spawn();
+                item.transform.position = Vector3.right * Random.Range(-1, 2) * ScaleSpace + Vector3.forward * 100;
+                item.Init();
+            }
+            else
+            {
+                var enemy = EnemySpawner.Instance.Spawn();
+                enemy.transform.position = Vector3.right * Random.Range(-1, 2) * ScaleSpace + Vector3.forward * 100;
+                enemy.Init();
+            }
         }
     }
 
     public void SetScore(int amount)
     {
         Score = amount;
+        UIController.Instance.SetScoreText(Score);
     }
 
-    public void IncreaseScore(int amount)
+    public void PauseGame()
     {
-        SetScore(Score + amount);
+        Time.timeScale = 0;
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void EndGame()
+    {
+        // save highest score
+        if (PlayerPrefs.HasKey("HighestScore"))
+        {
+            int highestScore = PlayerPrefs.GetInt("HighesetScore");
+            if (highestScore < Score)
+            {
+                PlayerPrefs.SetInt("HighestScore", Score);
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetInt("HighestScore", Score);
+        }
+        //
+
+        // clear scene
+        ItemSpawner.Instance.Clear();
     }
 }

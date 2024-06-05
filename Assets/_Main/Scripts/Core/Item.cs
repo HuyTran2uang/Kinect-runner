@@ -20,15 +20,15 @@ public class Item : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         ItemSpawner.Instance.AddToPool(this);
     }
 
-    public void Receive()
+    public virtual void Receive(PlayerController receiver)
     {
         int score = 10;
-        GameManager.Instance.IncreaseScore(score);
+        receiver.IncreaseScore(score);
         gameObject.SetActive(false);
     }
 }
