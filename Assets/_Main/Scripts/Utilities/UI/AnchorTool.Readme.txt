@@ -1,0 +1,1 @@
+- Press F1 to auto anchor UI
