@@ -1,9 +1,20 @@
+using System.Linq;
 using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    public GameObject[] models;
+    public ElementSO[] baseElements;
+    private ElementSO ele;
+
     public void Init()
     {
+        models.ToList().ForEach(i => i.gameObject.SetActive(false));
+
+        ele = baseElements[Random.Range(0, baseElements.Length)];
+
+        models[ele.ModelIndex].SetActive(true);
+
         gameObject.SetActive(true);
     }
 
@@ -27,8 +38,7 @@ public class Item : MonoBehaviour
 
     public virtual void Receive(PlayerController receiver)
     {
-        int score = 10;
-        receiver.IncreaseScore(score);
+        receiver.IncreaseScore(ele.Score);
         gameObject.SetActive(false);
     }
 }
