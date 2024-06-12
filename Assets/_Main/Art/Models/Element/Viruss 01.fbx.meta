@@ -7,7 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Viruss02
+      name: Viruss
     second: {fileID: 2100000, guid: 162ce38d64dec8e4a95fc1f4c42d625b, type: 2}
   materials:
     materialImportMode: 2
