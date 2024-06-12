@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [HideInInspector] public int OldSpace;
     public float ScaleSpace = 2;
     public int Score;
+    public int SpaceSpawnEle = 15;
+    public Transform PointSpawnEle;
 
     private void Start()
     {
@@ -40,20 +42,20 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     private void SpawnOneItemOrEnemyEachSpace()
     {
-        if ((int)Space % 15 == 0 && (int)Space != OldSpace)
+        if ((int)Space % SpaceSpawnEle == 0 && (int)Space != OldSpace)
         {
             OldSpace = (int)(Space);
             bool isItem = UnityEngine.Random.Range(0, 2) == 1 ? true : false;
             if (isItem)
             {
                 var item = ItemSpawner.Instance.Spawn();
-                item.transform.position = Vector3.right * Random.Range(-1, 2) * ScaleSpace + Vector3.forward * 100;
+                item.transform.position = Vector3.right * Random.Range(-1, 2) * ScaleSpace + Vector3.forward * PointSpawnEle.position.z;
                 item.Init();
             }
             else
             {
                 var enemy = EnemySpawner.Instance.Spawn();
-                enemy.transform.position = Vector3.right * Random.Range(-1, 2) * ScaleSpace + Vector3.forward * 100;
+                enemy.transform.position = Vector3.right * Random.Range(-1, 2) * ScaleSpace + Vector3.forward * PointSpawnEle.position.z;
                 enemy.Init();
             }
         }
