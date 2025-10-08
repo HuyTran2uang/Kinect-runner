@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b815e9bac320b7043a03f18f085b9e3d, type: 3}
+  m_Name: DenOngSao
+  m_EditorClassIdentifier: 
+  modelIndex: 2
+  score: 99999
+  pickupParticlePrefab: {fileID: 3246540154833248666, guid: 8df90d8fc52d22645abcf60af1468cc2,
+    type: 3}
+  spawnWeight: 0.3

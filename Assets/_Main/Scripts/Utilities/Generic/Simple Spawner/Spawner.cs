@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner<T> : MonoBehaviourSingleton<Spawner<T>> where T : MonoBehaviour
@@ -41,8 +41,21 @@ public class Spawner<T> : MonoBehaviourSingleton<Spawner<T>> where T : MonoBehav
         _pool.Enqueue(item);
     }
 
+    //public void Clear()
+    //{
+    //    _used.ForEach(i => i.gameObject.SetActive(false));
+    //}
+
     public void Clear()
     {
-        _used.ForEach(i => i.gameObject.SetActive(false));
+        // copy danh sách trước khi disable
+        var tempList = new List<T>(_used);
+
+        foreach (var i in tempList)
+        {
+            i.gameObject.SetActive(false);
+            //Destroy(i);
+        }
     }
+
 }

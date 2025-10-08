@@ -3,6 +3,8 @@ using UnityEngine;
 public class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
+
+    [System.Obsolete]
     public static T Instance
     {
         get
